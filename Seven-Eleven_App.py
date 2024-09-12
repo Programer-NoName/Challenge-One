@@ -59,7 +59,7 @@ def keed_values():
 # ฟังก์ชันสำหรับแสดงผลลัพธ์
 def show_total_price(total_price):
     if total_price < 200:
-        total_price_label.config(text=f"ราคารวมทั้งหมด: {total_price} บาท")
+        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท")
     elif total_price >=200:
         total_price_promotion = total_price // 200 
         if total_price_promotion <=1 :
@@ -68,7 +68,7 @@ def show_total_price(total_price):
         elif total_price_promotion > 1:
             total_price_sub=(20*total_price_promotion)
             total_price=total_price-total_price_sub
-        total_price_label.config(text=f"ราคารวมทั้งหมด: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
+        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
         
 
 # calculate
