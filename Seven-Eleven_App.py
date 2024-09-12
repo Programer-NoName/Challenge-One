@@ -72,7 +72,7 @@ def show_total_price(total_price):
         
 
 # calculate
-def calculate_Floor_division():
+def calculate_Function():
     # part name variable
     quantity_from_keed_values = keed_values()
     if quantity_from_keed_values == "error":
@@ -169,7 +169,7 @@ total_price_label = tk.Label(app, text="ราคารวมทั้งหม�
 total_price_label.pack(pady=10)
 
 # ปุ่มสำหรับยืนยันจำนวนสินค้า
-calculate_button = tk.Button(app, text="คำนวณ", command=calculate_Floor_division)
+calculate_button = tk.Button(app, text="คำนวณ", command=calculate_Function)
 calculate_button.config(width=20, height=3, padx=3, font=setup_font_size)
 calculate_button.pack()
 
