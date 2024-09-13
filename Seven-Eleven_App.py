@@ -42,6 +42,24 @@ def create_product_table(app):
     # วางตารางบนหน้าต่างหลัก
     table.pack()
 
+    
+# ฟังก์ชันช่วยสำหรับสร้างแถวของป้ายและช่องกรอกข้อมูล
+def create_labeled_entry(main_variable, label_text):
+    frame = tk.Frame(main_variable)
+    frame.pack(pady=5)  # เว้นระยะห่างในแนวดิ่ง
+
+    label = tk.Label(frame, text=label_text, font=new_setup_font)
+    label.pack(side=tk.LEFT, padx=5)  # วางป้ายทางซ้าย
+
+    entry = tk.Entry(frame, width=20)
+    entry.pack(side=tk.LEFT)  # วางช่องกรอกข้อมูลทางขวา
+
+    unit_label = tk.Label(frame, text="ชิ้น", font=new_setup_font)
+    unit_label.pack(side=tk.LEFT, padx=5)  # วางป้าย "ชิ้น" ทางขวาของช่องกรอกข้อมูล
+
+    return entry
+
+
 # ฟังก์ชันสำหรับเก็บค่าจำนวนสินค้า
 def keed_values():
     try:
@@ -56,19 +74,7 @@ def keed_values():
         return [product_A, product_B, product_C, product_D, product_E]
     except ValueError:
         return "error"
-# ฟังก์ชันสำหรับแสดงผลลัพธ์
-def show_total_price(total_price):
-    if total_price < 200:
-        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท")
-    elif total_price >=200:
-        total_price_promotion = total_price // 200 
-        if total_price_promotion <=1 :
-            total_price_sub=20
-            total_price=total_price-total_price_sub
-        elif total_price_promotion > 1:
-            total_price_sub=(20*total_price_promotion)
-            total_price=total_price-total_price_sub
-        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
+
         
 
 # calculate
@@ -89,6 +95,15 @@ def calculate_Function():
     price_A, price_B, price_C, price_D, price_E = ["20", "30", "10", "15", "5"]
     promotion_price_A, promotion_price_B, promotion_price_C, promotion_price_D, promotion_price_E = ["20", "10", "0", "15", "2.50"]
 
+
+# part calculate quantity_product no promotion
+    calculate_quantity_product_A = (quantity_product_A * int(price_A))
+    calculate_quantity_product_B = (quantity_product_B * int(price_B))
+    calculate_quantity_product_C = (quantity_product_C * int(price_C))
+    calculate_quantity_product_D = (quantity_product_D * int(price_D))
+    calculate_quantity_product_E = (quantity_product_E * int(price_E))
+
+
     # part calculate_Floor_division //2
     Floor_division_product_A = (quantity_product_A // 2) if quantity_product_A >= 2 else 0
     Floor_division_product_B = (quantity_product_B // 2) if quantity_product_B >= 2 else 0
@@ -96,12 +111,6 @@ def calculate_Function():
     Floor_division_product_D = (quantity_product_D // 2) if quantity_product_D >= 2 else 0
     Floor_division_product_E = (quantity_product_E // 2) if quantity_product_E >= 2 else 0
 
-    # part calculate quantity_product no promotion
-    calculate_quantity_product_A = (quantity_product_A * int(price_A))
-    calculate_quantity_product_B = (quantity_product_B * int(price_B))
-    calculate_quantity_product_C = (quantity_product_C * int(price_C))
-    calculate_quantity_product_D = (quantity_product_D * int(price_D))
-    calculate_quantity_product_E = (quantity_product_E * int(price_E))
 
     # part calculate quantity_product with promotion
     promotion_quantity_product_A = (Floor_division_product_A * int(promotion_price_A)) if Floor_division_product_A > 0 else 0
@@ -123,21 +132,21 @@ def calculate_Function():
     # แสดงผลลัพธ์
     show_total_price(total_price_all_product)
 
-# ฟังก์ชันช่วยสำหรับสร้างแถวของป้ายและช่องกรอกข้อมูล
-def create_labeled_entry(main_variable, label_text):
-    frame = tk.Frame(main_variable)
-    frame.pack(pady=5)  # เว้นระยะห่างในแนวดิ่ง
 
-    label = tk.Label(frame, text=label_text, font=new_setup_font)
-    label.pack(side=tk.LEFT, padx=5)  # วางป้ายทางซ้าย
+# ฟังก์ชันสำหรับแสดงผลลัพธ์
+def show_total_price(total_price):
+    if total_price < 200:
+        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท")
+    elif total_price >=200:
+        total_price_promotion = total_price // 200 
+        if total_price_promotion <=1 :
+            total_price_sub=20
+            total_price=total_price-total_price_sub
+        elif total_price_promotion > 1:
+            total_price_sub=(20*total_price_promotion)
+            total_price=total_price-total_price_sub
+        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
 
-    entry = tk.Entry(frame, width=20)
-    entry.pack(side=tk.LEFT)  # วางช่องกรอกข้อมูลทางขวา
-
-    unit_label = tk.Label(frame, text="ชิ้น", font=new_setup_font)
-    unit_label.pack(side=tk.LEFT, padx=5)  # วางป้าย "ชิ้น" ทางขวาของช่องกรอกข้อมูล
-
-    return entry
 
 # setuup app part
 # สร้างหน้าต่างหลัก
@@ -145,6 +154,7 @@ app = tk.Tk()
 app.configure(bg="#E8F0FE")
 app.title("โปรแกรมขายของใน 7-11")
 app.geometry('700x600')
+# icon logo app
 photo = ImageTk.PhotoImage(Image.open(BytesIO(requests.get('https://seeklogo.com/images/1/7-Eleven-logo-08AAB4F0FE-seeklogo.com.png').content)))
 app.iconphoto(False, photo)
 
@@ -153,6 +163,11 @@ default_font = font.nametofont("TkDefaultFont")  # ดึงฟอนต์เ�
 setup_font_size = default_font.cget("size") + 5  # เพิ่มขนาดขึ้น 10 หน่วย
 new_setup_font = default_font.copy()
 new_setup_font.configure(size=setup_font_size)
+
+
+
+
+# windows app running
 
 # เรียกใช้ฟังก์ชันสร้างตาราง
 create_product_table(app)
