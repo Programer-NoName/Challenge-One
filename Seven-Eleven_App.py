@@ -32,7 +32,7 @@ def create_product_table(app):
         ('สินค้า C', 10, 'ไม่ลดราคา'),
         ('สินค้า D', 15, 'ลด 15 บาท'),
         ('สินค้า E', 5, 'ลด 2.50 บาท'),
-        ('ถ้าซื้อครบ 200 บาท','(หลังหักส่วนลดข้างบนแล้ว)','ลดเพิ่มอีก 20 บาท')
+        ('ถ้าซื้อครบ 200 บาท','(หลังหักส่วนสินค้าแล้ว)','ลดเพิ่มอีก 20 บาท')
     ]
 
     # แสดงข้อมูลลงในตาราง
@@ -127,7 +127,7 @@ def calculate_Function():
     price_to_pay_E = (calculate_quantity_product_E - promotion_quantity_product_E)
 
     # part sum all product
-    total_price_all_product = price_to_pay_A + price_to_pay_B + price_to_pay_C + price_to_pay_D + price_to_pay_E
+    total_price_all_product = (((((price_to_pay_A + price_to_pay_B) + price_to_pay_C ) + price_to_pay_D ) + price_to_pay_E))
 
     # แสดงผลลัพธ์
     show_total_price(total_price_all_product)
@@ -135,17 +135,18 @@ def calculate_Function():
 
 # ฟังก์ชันสำหรับแสดงผลลัพธ์
 def show_total_price(total_price):
-    if total_price < 200:
-        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท")
-    elif total_price >=200:
+    total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท")
+    if total_price >=200:
         total_price_promotion = total_price // 200 
-        if total_price_promotion <=1 :
-            total_price_sub=20
-            total_price=total_price-total_price_sub
-        elif total_price_promotion > 1:
+        total_price_sub=20
+        total_price_topay=total_price-total_price_sub
+
+        if total_price_promotion > 1:
             total_price_sub=(20*total_price_promotion)
-            total_price=total_price-total_price_sub
-        total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
+            total_price_topay=total_price-total_price_sub
+
+    total_price_label.config(text=f"ราคารวมทั้งหมด:{total_price} บาท \n ส่วนลดเพิ่มเติม: {total_price_sub} บาท \n ราคารวมทั้งหมดที่ต้องชำระ: {total_price_topay} บาท ")
+    # total_price_label.config(text=f"ราคารวมทั้งหมดที่ต้องชำระ: {total_price} บาท (ส่วนลด {total_price_sub} บาท)")
 
 
 # setuup app part
